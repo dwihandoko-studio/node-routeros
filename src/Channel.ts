@@ -157,11 +157,17 @@ export class Channel extends EventEmitter {
             case '!re':
                 if (this.streaming) this.emit('stream', parsed);
                 break;
+
+            // --- PERBAIKAN DIMULAI DI SINI ---
+            case '!empty': // Anggap balasan !empty sama seperti perintah selesai.
+            // --- PERBAIKAN SELESAI ---
+
             case '!done':
                 if (!this.trapped) this.emit('done', this.data);
                 this.close();
                 break;
             default:
+                // Sekarang hanya error yang benar-benar tidak dikenal yang akan masuk ke sini.
                 this.emit('unknown', reply);
                 this.close();
                 break;
